@@ -61,8 +61,13 @@ public class UserValidator {
         }
     }
 
-    public void validateClave(String clave) {
-        // Agregar validación para la clave encriptada
+    public boolean validate(UserRequestDto requestDto) {
+        if (requestDto !=null){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
 

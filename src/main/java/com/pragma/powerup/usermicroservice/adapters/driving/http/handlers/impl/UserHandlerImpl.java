@@ -34,6 +34,7 @@ public class UserHandlerImpl implements IUserHandler {
         validation.validatePhone(userRequestDto.getCel());
         validation.validateBirthday(userRequestDto.getBirthday());
         validation.validateAge(userRequestDto.getBirthday());
+        validation.validate(userRequestDto);
         User user = userRequestMapper.toUser(userRequestDto);
         userServicePort.saveUser(user);
     }
