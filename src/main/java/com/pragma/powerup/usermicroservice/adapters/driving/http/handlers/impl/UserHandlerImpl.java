@@ -5,7 +5,9 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.Pe
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IUserHandler;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.IPersonResponseMapper;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.mapper.IUserRequestMapper;
+import com.pragma.powerup.usermicroservice.domain.UserValidator;
 import com.pragma.powerup.usermicroservice.domain.api.IUserServicePort;
+import com.pragma.powerup.usermicroservice.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,19 @@ public class UserHandlerImpl implements IUserHandler {
     public void saveUser(UserRequestDto userRequestDto) {
         userServicePort.saveUser(userRequestMapper.toUser(userRequestDto));
     }
+
+    @Override
+    public void saveOwner(UserRequestDto userRequestDto) {
+        UserValidator validation = new UserValidator();
+        validation.validateEmail(userRequestDto.getEmail());
+        validation.validateDni(userRequestDto.getDni());
+        validation.validatePhone(userRequestDto.getCel());
+        validation.validateBirthday(userRequestDto.getBirthday());
+        validation.validateAge(userRequestDto.getBirthday());
+        User user = userRequestMapper.toUser(userRequestDto);
+        userServicePort.saveUser(user);
+    }
+
 
     @Override
     public void deleteUser(UserRequestDto userRequestDto) {

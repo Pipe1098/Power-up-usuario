@@ -23,7 +23,7 @@ import java.util.List;
 import static com.pragma.powerup.usermicroservice.configuration.Constants.CLIENT_ROLE_ID;
 import static com.pragma.powerup.usermicroservice.configuration.Constants.EMPLOYEE_ROLE_ID;
 import static com.pragma.powerup.usermicroservice.configuration.Constants.MAX_PAGE_SIZE;
-import static com.pragma.powerup.usermicroservice.configuration.Constants.PROVIDER_ROLE_ID;
+import static com.pragma.powerup.usermicroservice.configuration.Constants.OWNER_ROLE_ID;
 
 @RequiredArgsConstructor
 @Transactional
@@ -34,7 +34,7 @@ public class UserMysqlAdapter implements IUserPersistencePort {
     private final IUserEntityMapper userEntityMapper;
     @Override
     public void saveUser(User user) {
-        if (user.getRole().getId().equals(PROVIDER_ROLE_ID))
+        if (user.getRole().getId().equals(OWNER_ROLE_ID))
         {
             throw new RoleNotAllowedForCreationException();
         }
@@ -59,7 +59,7 @@ public class UserMysqlAdapter implements IUserPersistencePort {
     @Override
     public List<User> getAllProviders(int page) {
         Pageable pagination = PageRequest.of(page, MAX_PAGE_SIZE);
-        List<UserEntity> userEntityList = userRepository.findAllByRoleEntityId(PROVIDER_ROLE_ID, pagination);
+        List<UserEntity> userEntityList = userRepository.findAllByRoleEntityId(OWNER_ROLE_ID, pagination);
         if (userEntityList.isEmpty()) {
             throw new NoDataFoundException();
         }
@@ -68,7 +68,7 @@ public class UserMysqlAdapter implements IUserPersistencePort {
 
     @Override
     public User getProvider(Long id) {
-        UserEntity userEntity = userRepository.findByPersonEntityIdAndRoleEntityId(id, PROVIDER_ROLE_ID).orElseThrow(UserNotFoundException::new);
+        UserEntity userEntity = userRepository.findByPersonEntityIdAndRoleEntityId(id, OWNER_ROLE_ID).orElseThrow(UserNotFoundException::new);
         return userEntityMapper.toUser(userEntity);
     }
 
