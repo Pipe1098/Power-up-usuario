@@ -1,5 +1,7 @@
 package com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "user")
@@ -27,14 +32,15 @@ public class UserEntity {
     private String surname;
     private String mail;
     private String phone;
-    private String address;
-    private String idDniType;
+
+    @Schema(description = "Birthdate is optional -> The format is dd/MM/yyyy")
+    @Nullable
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate birthdate;
     @Column(unique = true, nullable = false, length = 20)
     private String dniNumber;
-    private String idPersonType;
     private String password;
-    private String tokenPassword;
     @ManyToOne(optional = true)
     @JoinColumn(name = "id_role")
-    private RoleEntity role;
+    private RoleEntity idRole;
 }
