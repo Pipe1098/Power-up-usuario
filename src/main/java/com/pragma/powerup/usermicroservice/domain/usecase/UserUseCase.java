@@ -34,6 +34,18 @@ public class UserUseCase implements IUserServicePort {
         }
     }
 
+    @Override
+    public User getUserByDni(String dniNumber) {
+        return userPersistencePort.getUserByDni(dniNumber);
+    }
+
+    @Override
+    public Boolean validateOwner(String dniNumber) {
+        User usuario = getUserByDni(dniNumber);
+        return usuario.getIdRole().getId().equals(Constants.OWNER_ROLE_ID);
+    }
+
+
     private boolean isAgeOwnerValidate(LocalDate birthdate) {
         LocalDate today = LocalDate.now();
         int age = Period.between(birthdate, today).getYears();
