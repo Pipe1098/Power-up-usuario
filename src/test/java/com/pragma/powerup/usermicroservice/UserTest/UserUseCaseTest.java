@@ -26,7 +26,7 @@ public class UserUseCaseTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        userUseCase = new UserUseCase(userPersistencePort);
+        userUseCase = new UserUseCase(userPersistencePort, token);
     }
 
     @Test

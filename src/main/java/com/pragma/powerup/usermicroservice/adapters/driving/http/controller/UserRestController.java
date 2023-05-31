@@ -9,40 +9,55 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("api/v1/user")
 @RequiredArgsConstructor
 public class UserRestController {
-    private final IUserHandler personHandler;
+    private final IUserHandler userHandler;
 
-    @Operation(summary = "Add a new user",
-            responses = {
-                @ApiResponse(responseCode = "201", description = "Person created",
-                        content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
-                @ApiResponse(responseCode = "409", description = "Person already exists",
-                        content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))})
-    @PostMapping
-    public ResponseEntity<Map<String, String>> createUser(@RequestBody UserRequestDto userRequestDto) {
-        personHandler.saveUser(userRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.PERSON_CREATED_MESSAGE));
+    @Operation(summary = "Add a new owner")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Owner created", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Owner already exists", content = @Content)
+    })
+    @PostMapping("/owner")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Void> saveOwner(@Valid @RequestBody UserRequestDto owner) {
+        userHandler.saveOwner(owner);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @Operation(summary = "Add a new employee")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Employee created", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Employee already exists", content = @Content)
+    })
+    @PostMapping("/employee")
+    @PreAuthorize("hasAuthority('OWNER')")
+    public ResponseEntity<Void> saveEmployee(@Valid @RequestBody UserRequestDto employee) {
+        userHandler.saveEmployee(employee);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
 
     @GetMapping("{dniNumber}")
     public ResponseEntity<UserResponseDto> getUserByDni(@PathVariable("dniNumber") String dniNumber){
-        return ResponseEntity.ok(personHandler.getUserByDni(dniNumber));
+        return ResponseEntity.ok(userHandler.getUserByDni(dniNumber));
     }
 
     @GetMapping("validate-owner/{dni}")
     public Boolean validateOwnerRol(@PathVariable("dni") String dni){
-        return personHandler.validateOwner(dni);
+        return userHandler.validateOwner(dni);
     }
 }

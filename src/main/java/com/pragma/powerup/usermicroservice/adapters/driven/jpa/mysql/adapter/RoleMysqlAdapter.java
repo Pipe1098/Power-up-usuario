@@ -9,6 +9,7 @@ import com.pragma.powerup.usermicroservice.domain.spi.IRolePersistencePort;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class RoleMysqlAdapter implements IRolePersistencePort {
@@ -21,5 +22,14 @@ public class RoleMysqlAdapter implements IRolePersistencePort {
             throw new NoDataFoundException();
         }
         return roleEntityMapper.toRoleList(roleEntityList);
+    }
+
+    @Override
+    public Role getRole(Long id) {
+        Optional<RoleEntity> rolEntity = roleRepository.findById(id);
+        if(rolEntity.isEmpty()){
+            throw new NoDataFoundException();
+        }
+        return roleEntityMapper.roleEntityToRole(rolEntity.get());
     }
 }

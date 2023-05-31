@@ -8,8 +8,6 @@ import java.text.ParseException;
 public interface IAuthHandler {
     JwtResponseDto login(LoginRequestDto loginRequestDto);
     JwtResponseDto refresh(JwtResponseDto jwtResponseDto) throws ParseException;
-
     String getIdUser(String token);
-
     String getRolUser(String token);
 }

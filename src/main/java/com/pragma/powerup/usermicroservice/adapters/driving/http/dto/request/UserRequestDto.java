@@ -33,5 +33,5 @@ public class UserRequestDto {
     private LocalDate birthdate;
     @NotBlank
     private String password;
-    private RoleRequestDTO idRole;
+    private Long role;
 }
