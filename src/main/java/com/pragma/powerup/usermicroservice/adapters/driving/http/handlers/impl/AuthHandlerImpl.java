@@ -5,12 +5,11 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.Jw
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IAuthHandler;
 import com.pragma.powerup.usermicroservice.configuration.security.jwt.JwtProvider;
 import com.pragma.powerup.usermicroservice.domain.api.IAuthServicePort;
+import com.pragma.powerup.usermicroservice.domain.usecase.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -27,9 +26,10 @@ public class AuthHandlerImpl implements IAuthHandler, IAuthServicePort {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequestDto.getMail(), loginRequestDto.getPassword())
         );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        //SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Token.setToken(jwt);
+       // UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return new JwtResponseDto(jwt);
     }
 

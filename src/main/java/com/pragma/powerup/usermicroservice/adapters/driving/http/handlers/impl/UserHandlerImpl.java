@@ -26,11 +26,11 @@ public class UserHandlerImpl implements IUserHandler {
         personServicePort.saveEmployee(personRequestMapper.toUser(userRequestDto));
     }
 
- /*   @Override
+    @Override
     public void saveClient(UserRequestDto userRequestDto) {
         personServicePort.saveClient(personRequestMapper.toUser(userRequestDto));
 
-    }*/
+    }
 
     @Override
     public UserResponseDto getUserByDni(String dniNumber) {

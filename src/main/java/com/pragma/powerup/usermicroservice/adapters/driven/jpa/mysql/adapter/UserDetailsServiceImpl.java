@@ -2,8 +2,9 @@ package com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter;
 
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IUserRepository;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.UserEntity;
-import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.PrincipalUser;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.entity.RoleEntity;
+import com.pragma.powerup.usermicroservice.adapters.driving.http.exceptions.UserNotRegisterException;
+import com.pragma.powerup.usermicroservice.configuration.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,12 +21,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     IUserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
-        UserEntity usuario = userRepository.findByDniNumber(dni).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
-
-        if (usuario.getIdRole() == null) {
-            throw new UsernameNotFoundException("User not found with email: " + dni);
-        }
+    public UserDetails loadUserByUsername(String mail) throws UserNotRegisterException {
+        UserEntity usuario = userRepository.findByMail(mail).orElseThrow(() -> new UsernameNotFoundException(Constants.PERSON_NOT_FOUND_MESSAGE));
 
         List<RoleEntity> roles = new ArrayList<>();
         roles.add(usuario.getIdRole());

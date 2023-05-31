@@ -13,7 +13,7 @@ public class User {
     private LocalDate birthdate;
     private Role role;
 
-    public User(Long id, String dniNumber, String name, String surname, String mail, String phone, LocalDate birthdate, String password, Role idRole) {
+    public User(Long id, String dniNumber, String name, String surname, String mail, String phone, LocalDate birthdate, String password, Role role) {
         this.id = id;
         this.dniNumber = dniNumber;
         this.name = name;
@@ -22,7 +22,7 @@ public class User {
         this.phone = phone;
         this.birthdate = birthdate;
         this.password = password;
-        this.role = idRole;
+        this.role = role;
     }
 
     public Long getId() {

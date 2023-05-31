@@ -7,6 +7,8 @@ public interface IUserHandler {
 
     void saveOwner(UserRequestDto userRequestDto);
     void saveEmployee(UserRequestDto userRequestDto);
+    void saveClient(UserRequestDto client);
     UserResponseDto getUserByDni(String dniNumber);
     Boolean validateOwner(String dni);
+
 }
