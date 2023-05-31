@@ -13,6 +13,8 @@ public class Constants {
     public static final Long OWNER_ROLE_ID = 2L;
     public static final Long ADMIN_ROL_ID =1L ;
     public static final int MAX_PAGE_SIZE = 2;
+    public static final String ROL_ADMIN= "ROLE_ADMIN";
+    public static final String ROL_OWNER = "ROLE_OWNER";
     public static final String RESPONSE_MESSAGE_KEY = "message";
     public static final String PERSON_CREATED_MESSAGE = "Person created successfully";
     public static final String USER_CREATED_MESSAGE = "User created successfully";
@@ -25,6 +27,7 @@ public class Constants {
     public static final String PERSON_NOT_FOUND_MESSAGE = "No person found with the id provided";
     public static final String ROLE_NOT_FOUND_MESSAGE = "No role found with the id provided";
     public static final String ROLE_NOT_ALLOWED_MESSAGE = "No permission granted to create users with this role";
+    public static final String ROLE_NOT_AUTHORIZED = "No permission granted to create employees with this role";
     public static final String USER_ALREADY_EXISTS_MESSAGE = "A user already exists with the role provided";
     public static final String USER_NOT_FOUND_MESSAGE = "No user found with the role provided";
     public static final String SWAGGER_TITLE_MESSAGE = "User API Pragma Power Up";

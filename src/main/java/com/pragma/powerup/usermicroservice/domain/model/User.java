@@ -11,7 +11,7 @@ public class User {
     private String dniNumber;
     private String password;
     private LocalDate birthdate;
-    private Role idRole;
+    private Role role;
 
     public User(Long id, String dniNumber, String name, String surname, String mail, String phone, LocalDate birthdate, String password, Role idRole) {
         this.id = id;
@@ -22,7 +22,7 @@ public class User {
         this.phone = phone;
         this.birthdate = birthdate;
         this.password = password;
-        this.idRole = idRole;
+        this.role = idRole;
     }
 
     public Long getId() {
@@ -90,10 +90,10 @@ public class User {
     }
 
     public Role getIdRole() {
-        return idRole;
+        return role;
     }
 
     public void setIdRole(Role idRole) {
-        this.idRole = idRole;
+        this.role = idRole;
     }
 }

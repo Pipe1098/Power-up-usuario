@@ -4,6 +4,7 @@ import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.request.Log
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.JwtResponseDto;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.handlers.IAuthHandler;
 import com.pragma.powerup.usermicroservice.configuration.security.jwt.JwtProvider;
+import com.pragma.powerup.usermicroservice.domain.api.IAuthServicePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +17,7 @@ import java.text.ParseException;
 
 @Service
 @RequiredArgsConstructor
-public class AuthHandlerImpl implements IAuthHandler {
+public class AuthHandlerImpl implements IAuthHandler, IAuthServicePort {
 
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
@@ -45,6 +46,11 @@ public class AuthHandlerImpl implements IAuthHandler {
 
     @Override
     public String getRolUser(String token) {
+        return jwtProvider.getRolesFromToken(token);
+    }
+
+    @Override
+    public String getRole(String token) {
         return jwtProvider.getRolesFromToken(token);
     }
 }
