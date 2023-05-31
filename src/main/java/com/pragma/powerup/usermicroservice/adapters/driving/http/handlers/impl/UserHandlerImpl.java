@@ -27,8 +27,8 @@ public class UserHandlerImpl implements IUserHandler {
     }
 
     @Override
-    public Boolean validateOwner(String id) {
-        return personServicePort.validateOwner(id);
+    public Boolean validateOwner(String dni) {
+        return personServicePort.validateOwner(dni);
     }
 
 }

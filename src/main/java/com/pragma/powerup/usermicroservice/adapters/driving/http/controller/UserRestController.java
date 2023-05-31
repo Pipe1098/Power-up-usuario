@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/users/")
+@RequestMapping("/user/")
 @RequiredArgsConstructor
 public class UserRestController {
     private final IUserHandler personHandler;
@@ -40,9 +40,9 @@ public class UserRestController {
     public ResponseEntity<UserResponseDto> getUserByDni(@PathVariable("dniNumber") String dniNumber){
         return ResponseEntity.ok(personHandler.getUserByDni(dniNumber));
     }
-    @Hidden
-    @GetMapping("validate-owner/{id}")
-    public Boolean validateOwnerRol(@PathVariable("id") String id){
-        return personHandler.validateOwner(id);
+
+    @GetMapping("validate-owner/{dni}")
+    public Boolean validateOwnerRol(@PathVariable("dni") String dni){
+        return personHandler.validateOwner(dni);
     }
 }

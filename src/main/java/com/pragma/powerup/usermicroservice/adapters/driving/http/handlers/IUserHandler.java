@@ -7,5 +7,5 @@ public interface IUserHandler {
 
     void saveUser(UserRequestDto personRequestDto);
     UserResponseDto getUserByDni(String dniNumber);
-    Boolean validateOwner(String id);
+    Boolean validateOwner(String dni);
 }

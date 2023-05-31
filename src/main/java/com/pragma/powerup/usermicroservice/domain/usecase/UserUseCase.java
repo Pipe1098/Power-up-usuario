@@ -40,9 +40,9 @@ public class UserUseCase implements IUserServicePort {
     }
 
     @Override
-    public Boolean validateOwner(String dniNumber) {
-        User usuario = getUserByDni(dniNumber);
-        return usuario.getIdRole().getId().equals(Constants.OWNER_ROLE_ID);
+    public Boolean validateOwner(String dni) {
+        User usuario = getUserByDni(dni);
+        return usuario.getIdRole().getId()==Constants.OWNER_ROLE_ID;
     }
 
 
