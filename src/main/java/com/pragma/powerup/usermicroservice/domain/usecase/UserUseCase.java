@@ -46,19 +46,19 @@ public class UserUseCase implements IUserServicePort {
 
     @Override
     public void saveOwner(User usuario) {
-        saveUser(usuario, Constants.ROL_ADMIN, Constants.OWNER_ROLE_ID);
+        saveUser(usuario, Constants.ROLE_ADMIN, Constants.OWNER_ROLE_ID);
     }
 
-/*    @Override
+    @Override
     public void saveClient(User user) {
-        Role role = rolPersistencePort.getRole(Constants.CLIENT_ROLE_ID);
-        user.setIdRole(role);
-        this.userPersistencePort.saveUser(user);
-    }*/
+        /*Role role = rolPersistencePort.getRole(Constants.CLIENT_ROLE_ID);
+        user.setIdRole(role);*/
+        userPersistencePort.saveUser(user);
+    }
 
     @Override
     public void saveEmployee(User user) {
-        saveUser(user, Constants.ROL_OWNER, Constants.EMPLOYEE_ROLE_ID);
+        saveUser(user, Constants.ROLE_OWNER, Constants.EMPLOYEE_ROLE_ID);
     }
 
 

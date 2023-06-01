@@ -13,27 +13,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
 public class UserMysqlAdapter implements IUserPersistencePort {
-    private final IUserRepository personRepository;
-    private final IUserEntityMapper personEntityMapper;
+    private final IUserRepository userRepository;
+    private final IUserEntityMapper userEntityMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public void saveUser(User user) {
-        if (personRepository.findByDniNumber(user.getDniNumber()).isPresent()) {
+        if (userRepository.findByDniNumber(user.getDniNumber()).isPresent()) {
             throw new PersonAlreadyExistsException();
         }
 
-        if (personRepository.existsByMail(user.getMail())){
+        if (userRepository.existsByMail(user.getMail())){
             throw new MailAlreadyExistsException();
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        personRepository.save(personEntityMapper.toEntity(user));
+        userRepository.save(userEntityMapper.toEntity(user));
     }
 
     @Override
     public User getUserByDni(String dniNumber) {
-        UserEntity userEntity = personRepository.findByDniNumber(dniNumber).orElseThrow(() -> new UserNotFoundException("No se encontró ningún usuario con ese número de DNI: " + dniNumber));
-        return personEntityMapper.toUser(userEntity);
+        UserEntity userEntity = userRepository.findByDniNumber(dniNumber).orElseThrow(() -> new UserNotFoundException("No se encontró ningún usuario con ese número de DNI: " + dniNumber));
+        return userEntityMapper.toUser(userEntity);
     }
 }
