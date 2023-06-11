@@ -28,7 +28,7 @@ public class UserDtoTest {
     public void testUserRequestDtoValid() {
         RoleRequestDTO roleRequestDTO = new RoleRequestDTO(1L, "ROLE_ADMIN","ROLE_ADMIN");
 
-        UserRequestDto userRequestDto = new UserRequestDto("12345678","John","Doe","johndoe@example.com","+1234567890",LocalDate.of(2000, 1, 1),"password",1L);
+        UserRequestDto userRequestDto = new UserRequestDto("12345678","John","Doe","johndoe@example.com","+1234567890",LocalDate.of(2000, 1, 1),"password",1L,"1");
 
 
         Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(userRequestDto);
@@ -39,7 +39,7 @@ public class UserDtoTest {
     public void testUserRequestDtoInvalidBlank() {
         RoleRequestDTO roleRequestDTO = new RoleRequestDTO(1L, "admin","role admin");
 
-        UserRequestDto userRequestDto = new UserRequestDto("12345678","Juan","Doe","","",LocalDate.of(2000, 1, 1),"password",roleRequestDTO.getId());
+        UserRequestDto userRequestDto = new UserRequestDto("12345678","Juan","Doe","","",LocalDate.of(2000, 1, 1),"password",roleRequestDTO.getId(),"1");
 
         Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(userRequestDto);
         assertEquals(3, violations.size());
@@ -49,7 +49,7 @@ public class UserDtoTest {
     public void testUserRequestDtoInvalidFormat() {
         RoleRequestDTO roleRequestDTO = new RoleRequestDTO(1L, "admin","role admin");
 
-        UserRequestDto userRequestDto = new UserRequestDto("12345A","John", "Doe", "invalid-email-format", "invalid-phone-format", LocalDate.of(2000, 1, 1),"password",roleRequestDTO.getId());
+        UserRequestDto userRequestDto = new UserRequestDto("12345A","John", "Doe", "invalid-email-format", "invalid-phone-format", LocalDate.of(2000, 1, 1),"password",roleRequestDTO.getId(),"1");
 
 
         Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(userRequestDto);

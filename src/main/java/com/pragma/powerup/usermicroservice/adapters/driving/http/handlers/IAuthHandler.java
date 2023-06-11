@@ -9,5 +9,7 @@ public interface IAuthHandler {
     JwtResponseDto login(LoginRequestDto loginRequestDto);
     JwtResponseDto refresh(JwtResponseDto jwtResponseDto) throws ParseException;
     String getIdUser(String token);
-    String getRolUser(String token);
+    String getRoleUser(String token);
+    String getMailUser(String token);
+    String getIdRestaurantUser(String token);
 }

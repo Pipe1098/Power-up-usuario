@@ -5,6 +5,7 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.adapter.PrincipalUser;
 import com.pragma.powerup.usermicroservice.adapters.driving.http.dto.response.JwtResponseDto;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -19,7 +20,9 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class JwtProvider {
@@ -34,24 +37,46 @@ public class JwtProvider {
     public String generateToken(Authentication authentication) {
         PrincipalUser usuarioPrincipal = (PrincipalUser) authentication.getPrincipal();
         //List<String> roles = usuarioPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-        String nombre=usuarioPrincipal.getNombre();
+        String name=usuarioPrincipal.getNombre();
+        String mail=usuarioPrincipal.getEmail();
+        Long id =usuarioPrincipal.getId();
+        String idRestaurant =usuarioPrincipal.getIdRestaurant();
         String roles= usuarioPrincipal.getAuthorities().iterator().next().getAuthority();
+        Map<String, Object> extra = new HashMap<>();
+        extra.put("id user",id);
+        extra.put("name",name);
+        extra.put("idRestaurat",idRestaurant);
+        extra.put("roles",roles);
         return Jwts.builder()
-                .setSubject(usuarioPrincipal.getEmail())
-                .claim("rol", roles)
+                .setSubject(mail)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 180))
+                .addClaims(extra)
                 .signWith(SignatureAlgorithm.HS256, secret.getBytes())
                 .compact();
     }
 
-    public String getNombreUsuarioFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().getSubject();
+    public String getIdUserFromToken(String token) {
+        //return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().getSubject();
+        Integer id = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().get("id user",Integer.class);
+        return String.valueOf(id);
     }
     public String getRolesFromToken(String token) {
         return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().get("roles",String.class);
     }
+    public String getNombreUsuarioFromToken(String token) {
+        Claims claims = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
+        return (String) claims.get("name");
+    }
 
+    public String getEmailFromToken(String token) {
+        Claims claims = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
+        return claims.getSubject();
+    }
+    public String getIdRestaurantFromToken(String token) {
+        Claims claims = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
+        return (String) claims.get("idRestaurant");
+    }
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token);
@@ -90,5 +115,7 @@ public class JwtProvider {
         }
         return null;
     }
+
+
 
 }

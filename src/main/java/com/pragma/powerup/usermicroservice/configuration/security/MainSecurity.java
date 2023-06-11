@@ -6,6 +6,7 @@ import com.pragma.powerup.usermicroservice.configuration.security.jwt.JwtTokenFi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,8 +47,9 @@ public class MainSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests(requests -> requests
-                        .requestMatchers("/auth/login", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/actuator/health", "/user/","/user/validate-owner/{dni}").permitAll()
-                        //.requestMatchers("/role").hasRole("ADMIN")
+                        .requestMatchers("/auth/login", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/actuator/health","/api/v1/user/client").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v1/user/owner").hasAuthority("ADMINISTRATOR_ROLE")
+                        .requestMatchers(HttpMethod.POST,"/api/v1/user/employee").hasAuthority("OWNER_ROLE")
                         .requestMatchers("/user/owner").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

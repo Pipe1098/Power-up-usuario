@@ -11,7 +11,6 @@ import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import java.util.Map;
 
 @Configuration
@@ -33,6 +32,5 @@ public class OpenApiConfiguration {
                         .components(new Components()
                         .addSchemas("Map", mapSchema)
                         .addSchemas("Error", errorSchema));
-
     }
 }

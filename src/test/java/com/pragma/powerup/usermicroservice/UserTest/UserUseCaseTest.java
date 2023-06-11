@@ -45,7 +45,7 @@ import static org.mockito.Mockito.when;
 
         @Test
         public void saveUserWithValidData() {
-            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(2L, "Owner", "The owner of a restaurant"));
+            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(2L, "Owner", "The owner of a restaurant"),"1");
 
             when(authServicePort.getRole(Token.getToken())).thenReturn(Constants.ROLE_ADMIN);
             when(rolPersistencePort.getRole(Constants.OWNER_ROLE_ID)).thenReturn(new Role(2L, "Owner", "The owner of a restaurant"));
@@ -57,21 +57,21 @@ import static org.mockito.Mockito.when;
 
         @Test
         public void saveUserWithNullBirthdate() {
-            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", null, "password", new Role(2L, "Owner", "The owner of a restaurant"));
+            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", null, "password", new Role(2L, "Owner", "The owner of a restaurant"), "1");
 
             assertThrows(MissingBirthdateValidationException.class, () -> userUseCase.saveUser(user, Constants.ROLE_ADMIN, Constants.OWNER_ROLE_ID));
         }
 
         @Test
         public void saveUserWithInvalidAge() {
-            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2010, 1, 1), "password", new Role(2L, "Owner", "The owner of a restaurant"));
+            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2010, 1, 1), "password", new Role(2L, "Owner", "The owner of a restaurant"), "1");
 
             assertThrows(AgeNotValidException.class, () -> userUseCase.saveUser(user, Constants.ROLE_ADMIN, Constants.OWNER_ROLE_ID));
         }
 
         @Test
         public void saveOwner() {
-            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(2L, "ROLE_OWNER", "ROLE_OWNER"));
+            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(2L, "ROLE_OWNER", "ROLE_OWNER"), "1");
 
             when(rolPersistencePort.getRole(Constants.OWNER_ROLE_ID)).thenReturn(new Role(2L, "ROLE_OWNER", "ROLE_OWNER"));
             when(authServicePort.getRole(Token.getToken())).thenReturn(Constants.ROLE_ADMIN);
@@ -82,7 +82,7 @@ import static org.mockito.Mockito.when;
 
         @Test
         public void saveClient() {
-            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(4L, "ROLE_CLIENT", "A client in the restaurant"));
+            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(4L, "ROLE_CLIENT", "A client in the restaurant"), "1");
 
             when(rolPersistencePort.getRole(Constants.CLIENT_ROLE_ID)).thenReturn(new Role(4L, "ROLE_CLIENT", "ROLE_CLIENT"));
                     userUseCase.saveClient(user);
@@ -92,7 +92,7 @@ import static org.mockito.Mockito.when;
 
         @Test
         public void saveEmployeeWithValidData() {
-            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(4L, "Employee", "An employee in the restaurant"));
+            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(4L, "Employee", "An employee in the restaurant"), "1");
 
             when(authServicePort.getRole(Token.getToken())).thenReturn(Constants.ROLE_OWNER);
             when(rolPersistencePort.getRole(Constants.EMPLOYEE_ROLE_ID)).thenReturn(new Role(4L, "Employee", "An employee in the restaurant"));
@@ -104,14 +104,14 @@ import static org.mockito.Mockito.when;
 
         @Test
         public void saveEmployeeWithNullBirthdate() {
-            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", null, "password", new Role(4L, "Employee", "An employee in the restaurant"));
+            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", null, "password", new Role(4L, "Employee", "An employee in the restaurant"), "1");
 
             assertThrows(MissingBirthdateValidationException.class, () -> userUseCase.saveEmployee(user));
         }
 
         @Test
         public void saveEmployeeWithInvalidRole() {
-            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(2L, "ROLE_CLIENT", "CLIENT_ROLE"));
+            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(2L, "ROLE_CLIENT", "CLIENT_ROLE"), "1");
             when(authServicePort.getRole(Token.getToken())).thenReturn(Constants.ROLE_CLIENT);
             assertThrows(UserNoAuthException.class, () -> userUseCase.saveEmployee(user));
         }
@@ -129,7 +129,7 @@ import static org.mockito.Mockito.when;
         public void validateOwner() {
             String dni = "12345678A";
 
-            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(2L, "Owner", "The owner of a restaurant"));
+            User user = new User(1L, "12345678A", "John", "Doe", "johndoe@mail.com", "123456789", LocalDate.of(2000, 1, 1), "password", new Role(2L, "Owner", "The owner of a restaurant"), "1");
             when(userPersistencePort.getUserByDni(dni)).thenReturn(user);
 
             boolean result = userUseCase.validateOwner(dni);
