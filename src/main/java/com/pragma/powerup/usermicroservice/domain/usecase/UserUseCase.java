@@ -51,8 +51,6 @@ public class UserUseCase implements IUserServicePort {
 
     @Override
     public void saveClient(User user) {
-        /*Role role = rolPersistencePort.getRole(Constants.CLIENT_ROLE_ID);
-        user.setIdRole(role);*/
         userPersistencePort.saveUser(user);
     }
 

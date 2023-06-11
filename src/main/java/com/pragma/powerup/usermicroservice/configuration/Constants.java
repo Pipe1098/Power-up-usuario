@@ -13,9 +13,10 @@ public class Constants {
     public static final Long OWNER_ROLE_ID = 2L;
     public static final Long ADMIN_ROL_ID =1L ;
     public static final int MAX_PAGE_SIZE = 2;
-    public static final String ROLE_ADMIN= "ROLE_ADMIN";
-    public static final String ROLE_OWNER = "ROLE_OWNER";
-    public static final String ROLE_CLIENT = "ROL_CLIENT";
+    public static final String ROLE_ADMIN= "ADMINISTRATOR_ROLE";
+    public static final String ROLE_OWNER = "OWNER_ROLE";
+    public static final String ROLE_CLIENT = "CLIENT_ROLE";
+    public static final String EMPLOYEE_ROLE = "EMPLOYEE_ROLE";
     public static final String RESPONSE_MESSAGE_KEY = "message";
     public static final String PERSON_CREATED_MESSAGE = "Person created successfully";
     public static final String USER_CREATED_MESSAGE = "User created successfully";

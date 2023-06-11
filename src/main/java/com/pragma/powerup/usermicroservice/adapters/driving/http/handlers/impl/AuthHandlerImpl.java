@@ -41,12 +41,21 @@ public class AuthHandlerImpl implements IAuthHandler, IAuthServicePort {
 
     @Override
     public String getIdUser(String token) {
-         return jwtProvider.getNombreUsuarioFromToken(token);
+         return jwtProvider.getIdUserFromToken(token);
     }
 
     @Override
-    public String getRolUser(String token) {
+    public String getRoleUser(String token) {
         return jwtProvider.getRolesFromToken(token);
+    }
+    @Override
+    public String getMailUser(String token) {
+        return jwtProvider.getEmailFromToken(token);
+    }
+
+    @Override
+    public String getIdRestaurantUser(String token) {
+        return jwtProvider.getIdRestaurantFromToken(token);
     }
 
     @Override

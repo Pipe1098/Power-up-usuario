@@ -41,6 +41,7 @@ public class UserEntity {
     @Column(unique = true, nullable = false, length = 20)
     private String dniNumber;
     private String password;
+    private String idRestaurant;
     @ManyToOne(optional = true)
     @JoinColumn(name = "id_role")
     private RoleEntity idRole;

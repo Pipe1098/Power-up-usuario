@@ -9,8 +9,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
 
 @RestController
@@ -31,14 +35,24 @@ public class AuthController {
         return new ResponseEntity<>(authHandler.refresh(jwtResponseDto), HttpStatus.OK);
     }
 
-    @Hidden
-    @GetMapping("id/{token}")
-    public String obtenerIdToken(@PathVariable("token") String token){
+    //@Hidden
+    @GetMapping("/id/{token}")
+    public String getIdToken(@PathVariable("token") String token){
         return authHandler.getIdUser(token);
     }
-    @Hidden
-    @GetMapping("role/{token}")
-    public String obtenerRolToken(@PathVariable("token")String token){
-        return authHandler.getRolUser(token);
+    //@Hidden
+    @GetMapping("/role/{token}")
+    public String getRoleToken(@PathVariable("token")String token){
+        return authHandler.getRoleUser(token);
+    }
+
+    @GetMapping("/mail/{token}")
+    public String getmailToken(@PathVariable("token")String token){
+        return authHandler.getMailUser(token);
+    }
+
+    @GetMapping("/idRestaurant/{token}")
+    public String getidRestaurantToken(@PathVariable("token")String token){
+        return authHandler.getIdRestaurantUser(token);
     }
 }

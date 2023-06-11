@@ -6,6 +6,7 @@ import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.exceptions.
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.exceptions.UserNotFoundException;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.mappers.IUserEntityMapper;
 import com.pragma.powerup.usermicroservice.adapters.driven.jpa.mysql.repositories.IUserRepository;
+import com.pragma.powerup.usermicroservice.configuration.Constants;
 import com.pragma.powerup.usermicroservice.domain.model.User;
 import com.pragma.powerup.usermicroservice.domain.spi.IUserPersistencePort;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class UserMysqlAdapter implements IUserPersistencePort {
 
     @Override
     public User getUserByDni(String dniNumber) {
-        UserEntity userEntity = userRepository.findByDniNumber(dniNumber).orElseThrow(() -> new UserNotFoundException("No se encontró ningún usuario con ese número de DNI: " + dniNumber));
+        UserEntity userEntity = userRepository.findByDniNumber(dniNumber).orElseThrow(() -> new UserNotFoundException(Constants.PERSON_NOT_FOUND_MESSAGE));
         return userEntityMapper.toUser(userEntity);
     }
 }
