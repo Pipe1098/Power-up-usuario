@@ -37,4 +37,11 @@ public class UserMysqlAdapter implements IUserPersistencePort {
         UserEntity userEntity = userRepository.findByDniNumber(dniNumber).orElseThrow(() -> new UserNotFoundException(Constants.PERSON_NOT_FOUND_MESSAGE));
         return userEntityMapper.toUser(userEntity);
     }
+
+    @Override
+    public String getUserNameById(String dni) {
+        UserEntity userEntity = userRepository.findByName(dni).orElseThrow(() -> new UserNotFoundException(Constants.PERSON_NOT_FOUND_MESSAGE));
+        User userFound= userEntityMapper.toUser(userEntity);
+        return userFound.getName();
+    }
 }

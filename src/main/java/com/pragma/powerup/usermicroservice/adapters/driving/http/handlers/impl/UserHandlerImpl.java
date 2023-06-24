@@ -18,16 +18,19 @@ public class UserHandlerImpl implements IUserHandler {
 
     @Override
     public void saveOwner(UserRequestDto userRequestDto) {
+        userRequestDto.setRole(2l);
         personServicePort.saveOwner(personRequestMapper.toUser(userRequestDto));
     }
 
     @Override
     public void saveEmployee(UserRequestDto userRequestDto) {
+        userRequestDto.setRole(3l);
         personServicePort.saveEmployee(personRequestMapper.toUser(userRequestDto));
     }
 
     @Override
     public void saveClient(UserRequestDto userRequestDto) {
+        userRequestDto.setRole(4l);
         personServicePort.saveClient(personRequestMapper.toUser(userRequestDto));
 
     }
@@ -40,6 +43,11 @@ public class UserHandlerImpl implements IUserHandler {
     @Override
     public Boolean validateOwner(String dni) {
         return personServicePort.validateOwner(dni);
+    }
+
+    @Override
+    public String getUserNameById(String dni) {
+        return personServicePort.getUserNameById(dni);
     }
 
 }

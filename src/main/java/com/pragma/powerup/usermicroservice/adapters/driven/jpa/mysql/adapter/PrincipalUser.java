@@ -12,33 +12,42 @@ import java.util.stream.Collectors;
 
 public class PrincipalUser implements UserDetails {
     private Long id;
-
+    private Long idRestaurant;
     public Long getId() {
         return id;
     }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public Long getIdRestaurant() {
+        return idRestaurant;
+    }
+    public String getDni() {
+        return dni;
     }
 
     private String nombre;
-    private String nombreUsuario;
+    private String dni;
     private String email;
     private String password;
-    private String idRestaurant;
+
     private Collection<? extends GrantedAuthority> authorities;
 
-    public PrincipalUser(Long id, String nombre, String nombreUsuario, String email, String password, String idRestaurant, Collection<? extends GrantedAuthority> authorities) {
+    public PrincipalUser(Long id, String nombre, String dni, String email, String password, Long idRestaurant, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.nombre = nombre;
-        this.nombreUsuario = nombreUsuario;
+        this.dni = dni;
         this.email = email;
         this.password = password;
         this.idRestaurant = idRestaurant;
         this.authorities = authorities;
     }
 
-    public PrincipalUser(Long id, String nombre, String dni, String email, String password,
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+/*    public PrincipalUser(Long id, String nombre, String dni, String email, String password,
                          Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.nombre = nombre;
@@ -47,7 +56,7 @@ public class PrincipalUser implements UserDetails {
         this.password = password;
         this.authorities = authorities;
 
-    }
+    }*/
 
     public static PrincipalUser build(UserEntity usuario, List<RoleEntity> roles) {
         List<GrantedAuthority> authorities = roles.stream()
@@ -68,7 +77,7 @@ public class PrincipalUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nombreUsuario;
+        return dni;
     }
 
     @Override
@@ -91,11 +100,9 @@ public class PrincipalUser implements UserDetails {
         return true;
     }
 
-    public String getIdRestaurant() {
-        return idRestaurant;
-    }
 
-    public void setIdRestaurant(String idRestaurant) {
+
+    public void setIdRestaurant(Long idRestaurant) {
         this.idRestaurant = idRestaurant;
     }
 

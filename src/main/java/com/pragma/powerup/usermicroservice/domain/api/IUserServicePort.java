@@ -8,4 +8,5 @@ public interface IUserServicePort {
     void saveClient(User toUser);
     User getUserByDni(String dniNumber);
     Boolean validateOwner(String dni);
+    String getUserNameById(String dni);
 }

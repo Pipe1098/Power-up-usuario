@@ -71,6 +71,11 @@ public class UserUseCase implements IUserServicePort {
         return usuario.getIdRole().getId() == Constants.OWNER_ROLE_ID;
     }
 
+    @Override
+    public String getUserNameById(String dni) {
+        return userPersistencePort.getUserNameById(dni);
+    }
+
 
     private boolean isAgeOwnerValidate(LocalDate birthdate) {
         LocalDate today = LocalDate.now();

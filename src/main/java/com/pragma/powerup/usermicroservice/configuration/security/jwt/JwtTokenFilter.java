@@ -25,7 +25,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
-    private List<String> excludedPrefixes = Arrays.asList("/auth/**","/id/{token}", "/swagger-ui/**", "/actuator/**", "/api/v1/user/**","/api/v1/user/client","/api/v1/validate-owner/{dni}","auth/id/{token}","/auth/id/{token}","/role/{token}","/auth/role/{token}","/mail/{token}","auth/mail/{token}");
+    private List<String> excludedPrefixes = Arrays.asList("/role","/role/**","/id/{token}", "/swagger-ui/**", "/actuator/**", "/person/","/api/v1/user/client","/api/v1/user/validate-owner/{dni}","/api/v1/user/owner","/api/v1/user/employee");
     private AntPathMatcher pathMatcher = new AntPathMatcher();
 
     @Override

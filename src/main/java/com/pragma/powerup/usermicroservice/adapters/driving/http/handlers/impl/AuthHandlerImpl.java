@@ -57,6 +57,10 @@ public class AuthHandlerImpl implements IAuthHandler, IAuthServicePort {
     public String getIdRestaurantUser(String token) {
         return jwtProvider.getIdRestaurantFromToken(token);
     }
+    @Override
+    public String getDniUsuarioFromToken(String token) {
+        return jwtProvider.getDniUsuarioFromToken(token);
+    }
 
     @Override
     public String getRole(String token) {

@@ -11,5 +11,6 @@ public interface IAuthHandler {
     String getIdUser(String token);
     String getRoleUser(String token);
     String getMailUser(String token);
+    String getDniUsuarioFromToken(String token);
     String getIdRestaurantUser(String token);
 }

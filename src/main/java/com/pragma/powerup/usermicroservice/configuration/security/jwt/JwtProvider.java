@@ -37,15 +37,16 @@ public class JwtProvider {
     public String generateToken(Authentication authentication) {
         PrincipalUser usuarioPrincipal = (PrincipalUser) authentication.getPrincipal();
         //List<String> roles = usuarioPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-        String name=usuarioPrincipal.getNombre();
+        String dni=usuarioPrincipal.getDni();
         String mail=usuarioPrincipal.getEmail();
         Long id =usuarioPrincipal.getId();
-        String idRestaurant =usuarioPrincipal.getIdRestaurant();
+        Long idRestaurant =usuarioPrincipal.getIdRestaurant();
+        System.out.println(idRestaurant);
         String roles= usuarioPrincipal.getAuthorities().iterator().next().getAuthority();
         Map<String, Object> extra = new HashMap<>();
         extra.put("id user",id);
-        extra.put("name",name);
-        extra.put("idRestaurat",idRestaurant);
+        extra.put("id res",idRestaurant);
+        extra.put("dni",dni);
         extra.put("roles",roles);
         return Jwts.builder()
                 .setSubject(mail)
@@ -57,26 +58,26 @@ public class JwtProvider {
     }
 
     public String getIdUserFromToken(String token) {
-        //return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().getSubject();
         Integer id = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().get("id user",Integer.class);
         return String.valueOf(id);
+    }
+    public String getIdRestaurantFromToken(String token) {
+        Integer idRes = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().get("id res",Integer.class);
+        return String.valueOf(idRes);
     }
     public String getRolesFromToken(String token) {
         return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().get("roles",String.class);
     }
-    public String getNombreUsuarioFromToken(String token) {
+    public String getDniUsuarioFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
-        return (String) claims.get("name");
+        return (String) claims.get("dni");
     }
 
     public String getEmailFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
-    public String getIdRestaurantFromToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
-        return (String) claims.get("idRestaurant");
-    }
+
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token);

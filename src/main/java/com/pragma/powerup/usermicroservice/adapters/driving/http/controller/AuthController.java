@@ -52,7 +52,11 @@ public class AuthController {
     }
 
     @GetMapping("/idRestaurant/{token}")
-    public String getidRestaurantToken(@PathVariable("token")String token){
+    public String getIdRestaurantToken(@PathVariable("token")String token){
         return authHandler.getIdRestaurantUser(token);
+    }
+    @GetMapping("/dni/{token}")
+    public String getDniUsuarioFromToken(@PathVariable("token")String token){
+        return authHandler.getDniUsuarioFromToken(token);
     }
 }

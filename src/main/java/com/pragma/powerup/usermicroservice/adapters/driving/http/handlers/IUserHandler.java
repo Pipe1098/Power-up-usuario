@@ -10,5 +10,5 @@ public interface IUserHandler {
     void saveClient(UserRequestDto client);
     UserResponseDto getUserByDni(String dniNumber);
     Boolean validateOwner(String dni);
-
+    String getUserNameById(String dni);
 }

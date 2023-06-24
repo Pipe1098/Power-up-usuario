@@ -7,12 +7,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
+@Setter
 public class UserRequestDto {
     @Pattern(regexp = "^[0-9]+$")
     @NotBlank
@@ -31,8 +33,9 @@ public class UserRequestDto {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Nullable
     private LocalDate birthdate;
+    private Long role;
     @NotBlank
     private String password;
-    private Long role;
     private String idRestaurant;
+
 }

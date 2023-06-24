@@ -55,7 +55,7 @@ public class UserRestController {
     })
     @PreAuthorize("hasAuthority('CLIENT_ROLE')")
     @PostMapping("/client")
-    public ResponseEntity<Void> saveClient(@Valid @RequestBody UserRequestDto client) {
+    public ResponseEntity<Void> saveClient(@RequestBody UserRequestDto client) {
         userHandler.saveClient(client);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -64,7 +64,10 @@ public class UserRestController {
     public ResponseEntity<UserResponseDto> getUserByDni(@PathVariable("dniNumber") String dniNumber){
         return ResponseEntity.ok(userHandler.getUserByDni(dniNumber));
     }
-
+    @GetMapping("/name/{dni}")
+    public String getNameById(@PathVariable("dni") String dni){
+        return userHandler.getUserNameById(dni);
+    }
     @GetMapping("/validate-owner/{dni}")
     public Boolean validateOwnerRol(@PathVariable("dni") String dni){
         return userHandler.validateOwner(dni);

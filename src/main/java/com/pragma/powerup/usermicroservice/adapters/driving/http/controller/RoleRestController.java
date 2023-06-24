@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController()
+@RestController
 @RequestMapping("/role")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "jwt")
@@ -32,7 +32,6 @@ public class RoleRestController {
                                     array = @ArraySchema(schema = @Schema(implementation = RoleResponseDto.class)))),
                     @ApiResponse(responseCode = "404", description = "No data found",
                             content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))})
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<List<RoleResponseDto>> getAllRoles() {
         return ResponseEntity.ok(roleHandler.getAllRoles());
